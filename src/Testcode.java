@@ -1,5 +1,6 @@
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 
 
@@ -37,19 +38,35 @@ public class Testcode {
 	}
 	private static void fire(){
 		BoardState boardState = new BoardState();
-		boardState.placeQueenAt(0,0);
+//		boardState.placeQueenAt(0,0);
 //		boardState.placeQueenAt(0,1);
 		
-		ArrayList<Point> fireline = new ArrayList<Point>();
-		fireline = boardState.lineOfFireOfQueenAt(0,0);
-		for (Point p: fireline)
-			boardState.placeQueenAt(p);
-		
-		
-		
+		Collection<Point> fireline = new ArrayList<Point>();
+		fireline = boardState.lineOfFireOfQueenAt(0,1);
+		for (Point p: fireline) boardState.placeQueenAt(p);
 		System.out.println(boardState);
 		
-		HashSet<Point> h = new HashSet<Point>(fireline);
-		for (Point p: h) System.out.println(p.x+","+p.y);
+		boardState = new BoardState();
+		fireline = boardState.lineOfFireOfQueenAt(0,0);
+		for (Point p: fireline) boardState.placeQueenAt(p);
+		System.out.println(boardState);
+		
+		boardState = new BoardState();
+		fireline = boardState.lineOfFireOfQueenAt(2,2);
+		for (Point p: fireline) boardState.placeQueenAt(p);
+		System.out.println(boardState);
+		
+		boardState = new BoardState();
+		fireline = boardState.lineOfFireOfQueenAt(3,3);
+		for (Point p: fireline) boardState.placeQueenAt(p);
+		System.out.println(boardState);
+		
+		boardState = new BoardState();
+		fireline = boardState.lineOfFireOfQueenAt(0,3);
+		for (Point p: fireline) boardState.placeQueenAt(p);
+		System.out.println(boardState);
+		
+//		HashSet<Point> h = new HashSet<Point>(fireline);
+//		for (Point p: h) System.out.println(p.x+","+p.y);
 	}
 }

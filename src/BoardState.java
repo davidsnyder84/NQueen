@@ -60,34 +60,76 @@ public class BoardState {
 		return 999;
 	}
 	
-	public ArrayList<Point> lineOfFireOfQueenAt(Point queenPosition){
-		ArrayList<Point> lineOfFire = new ArrayList<Point>();
+	public HashSet<Point> lineOfFireOfQueenAt(Point queenPosition){
+		HashSet<Point> lineOfFire = new HashSet<Point>();
 		
-		//horizontal/vertical
-		for (int i = 0; i < numQueens; i++){
-			lineOfFire.add(new Point(i, queenPosition.y));	//horizontal line of fire
-			lineOfFire.add(new Point(queenPosition.x, i));	//vertical line of fire
-		}
+		
+		
+		lineOfFire.addAll(crawlFrom(queenPosition, Crawl.UP));
+		lineOfFire.addAll(crawlFrom(queenPosition, Crawl.DOWN));
+		lineOfFire.addAll(crawlFrom(queenPosition, Crawl.LEFT));
+		lineOfFire.addAll(crawlFrom(queenPosition, Crawl.RIGHT));
+		lineOfFire.addAll(crawlFrom(queenPosition, Crawl.DIAG_UPLEFT));
+		lineOfFire.addAll(crawlFrom(queenPosition, Crawl.DIAG_DOWNRIGHT));
+		lineOfFire.addAll(crawlFrom(queenPosition, Crawl.DIAG_UPRIGHT));
+		lineOfFire.addAll(crawlFrom(queenPosition, Crawl.DIAG_DOWNLEFT));
+		
+//		//horizontal/vertical
+//		for (int i = 0; i < numQueens; i++){
+//			lineOfFire.add(new Point(i, queenPosition.y));	//horizontal line of fire
+//			lineOfFire.add(new Point(queenPosition.x, i));	//vertical line of fire
+//		}
 //		lineOfFire.remove(queenPosition);
-//		lineOfFire.remove(queenPosition);
-		
-		//diagonals
-		Point upLeftDiagonalCrawler = new Point(queenPosition.x - 1, queenPosition.y - 1);
-		while (validCoordinate(upLeftDiagonalCrawler)){
-			lineOfFire.add(new Point(upLeftDiagonalCrawler));
-			upLeftDiagonalCrawler.y -= 1; upLeftDiagonalCrawler.x -= 1;
-		}
-		
-		Point upRightDiagonalCrawler = new Point(queenPosition.x + 1, queenPosition.y + 1);
-		while (validCoordinate(upRightDiagonalCrawler)){
-			lineOfFire.add(new Point(upRightDiagonalCrawler));
-			upRightDiagonalCrawler.y += 1; upRightDiagonalCrawler.x += 1;
-		}
-		for (Point p: lineOfFire) System.out.println(p.x + "," + p.y);
+//		
+//		//diagonals
+//		Point upLeftDiagonalCrawler = new Point(queenPosition.x - 1, queenPosition.y - 1);
+//		while (validCoordinate(upLeftDiagonalCrawler)){
+//			lineOfFire.add(new Point(upLeftDiagonalCrawler));
+//			upLeftDiagonalCrawler.y -= 1; upLeftDiagonalCrawler.x -= 1;
+//		}
+//		
+//		Point upRightDiagonalCrawler = new Point(queenPosition.x + 1, queenPosition.y + 1);
+//		while (validCoordinate(upRightDiagonalCrawler)){
+//			lineOfFire.add(new Point(upRightDiagonalCrawler));
+//			upRightDiagonalCrawler.y += 1; upRightDiagonalCrawler.x += 1;
+//		}
+//		for (Point p: lineOfFire) System.out.println(p.x + "," + p.y);
 		
 		return lineOfFire;
 	}
-	public ArrayList<Point> lineOfFireOfQueenAt(int x, int y){return lineOfFireOfQueenAt(new Point(x,y));}
+	public HashSet<Point> lineOfFireOfQueenAt(int x, int y){return lineOfFireOfQueenAt(new Point(x,y));}
+	
+	
+	
+	public HashSet<Point> crawlFrom(Point p, Crawl crawl){
+		HashSet<Point> lineOfFire = new HashSet<Point>();
+		Point crawler = new Point(p.x + crawl.xmod, p.y + crawl.ymod);
+		while (validCoordinate(crawler)){
+			lineOfFire.add(new Point(crawler));
+			crawler.x += crawl.xmod; crawler.y += crawl.ymod;
+		}
+		
+		return lineOfFire;
+	}
+	
+	private enum Crawl{
+		UP(0,-1),
+		DOWN(0,1),
+		LEFT(-1,0),
+		RIGHT(1,0),
+		DIAG_UPLEFT(-1,-1),
+		DIAG_UPRIGHT(1,-1),
+		DIAG_DOWNLEFT(-1,1),
+		DIAG_DOWNRIGHT(1,1);
+		private int xmod, ymod;
+		
+		private Crawl(int xshift, int yshift){
+			xmod=xshift; ymod=yshift;
+		}
+	}
+	
+	
+	
 	
 	
 	
