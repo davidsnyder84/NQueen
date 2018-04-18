@@ -120,9 +120,9 @@ public class BoardState {
 	
 	public String toString(){
 		String boardstring = "";
-		for (int i=0; i<numQueens; i++){
-			for (int j=0; j<numQueens; j++)
-				if (queenPositions.contains(new Point(i,j)))
+		for (int y=0; y<numQueens; y++){
+			for (int x=0; x<numQueens; x++)
+				if (queenPositions.contains(new Point(x,y)))
 					boardstring += SYMBOL_QUEEN + " ";
 				else
 					boardstring += SYMBOL_BLANK + " ";

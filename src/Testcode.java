@@ -10,13 +10,12 @@ public class Testcode {
 	public static void main(String[] args){
 //		equaltest();
 //		fire();
-//		numConflicts();
+		numConflicts();
 
-		BoardState boardState = new BoardState();
-		boardState.placeQueenAt(0,1);
-		boardState.placeQueenAt(0,2);
-//		boardState.removeQueenAt(2, 3);
-		System.out.println(boardState);
+//		BoardState boardState = new BoardState();
+//		boardState.placeQueenAt(0,1);
+//		boardState.placeQueenAt(0,2);
+//		System.out.println(boardState);
 		
 		
 	}
@@ -73,34 +72,36 @@ public class Testcode {
 	
 	private static void numConflicts(){
 		BoardState boardState = new BoardState();
+		int[] want = null;
 		
-		boardState = DemoBoards.exampleState1CONFLICTS();
-		System.out.print(boardState);
-		System.out.println("#Conflicts? (want1): " + boardState.numConflicts() + "\n");
+//		boardState = DemoBoards.exampleState1CONFLICTS();
+//		System.out.print(boardState);
+//		System.out.println("#Conflicts? (want1): " + boardState.numConflicts() + "\n");
+//		
+//		boardState = DemoBoards.exampleState2CONFLICTS();
+//		System.out.print(boardState);
+//		System.out.println("#Conflicts? (want2): " + boardState.numConflicts() + "\n");
+//		
+//		boardState = DemoBoards.exampleState3CONFLICTS();
+//		System.out.print(boardState);
+//		System.out.println("#Conflicts? (want3): " + boardState.numConflicts() + "\n");
 		
-		boardState = DemoBoards.exampleState2CONFLICTS();
-		System.out.print(boardState);
-		System.out.println("#Conflicts? (want2): " + boardState.numConflicts() + "\n");
 		
-		boardState = DemoBoards.exampleState3CONFLICTS();
-		System.out.print(boardState);
-		System.out.println("#Conflicts? (want3): " + boardState.numConflicts() + "\n");
 		
+		
+//		want = new int[]{2,2,1,2,3,1,2,1};
 //		for (int y = 0; y<8; y++){
 //			boardState = DemoBoards.e1base();
 //			boardState.placeQueenAt(7, y);
-//			
-////			System.out.print(boardState);
-//			System.out.println("#Conflicts?: " + boardState.numConflicts());
+//			System.out.println("#Conflicts? (want " + want[y] + "): " + boardState.numConflicts());
 //		}
 		
-//		for (int y = 0; y<8; y++){
-//			boardState = DemoBoards.e2base();
-//			boardState.placeQueenAt(5, y);
-//			
-////			System.out.print(boardState);
-//			System.out.println("#Conflicts?: " + boardState.numConflicts());
-//		}
+		want = new int[]{3,3,1,2,3,2,3,0};
+		for (int y = 0; y<8; y++){
+			boardState = DemoBoards.e2base();
+			boardState.placeQueenAt(5, y);
+			System.out.println("#Conflicts? (want " + want[y] + "): " + boardState.numConflicts());
+		}
 		
 	}
 }
