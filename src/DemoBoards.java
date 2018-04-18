@@ -10,11 +10,11 @@ public class DemoBoards {
 	
 	
 	
-	public static void main(String[] ar){generateRandomInRows(8);}
+//	public static void main(String[] ar){generateRandomInRows(8);}
 	
 	public static BoardState generateRandomInRows(int numQueens){
+		BoardState boardState = new BoardState(numQueens);
 		Random random = new Random();
-		BoardState boardState = new BoardState();
 		for (int x=0; x<numQueens; x++)
 			boardState.placeQueenAt(x, random.nextInt(numQueens));
 		return boardState;
@@ -22,10 +22,20 @@ public class DemoBoards {
 	
 	
 	
+	public static BoardState generateDiagonal(int numQueens){
+		BoardState boardState = new BoardState(numQueens);
+		for (int x=0; x<numQueens; x++)
+			boardState.placeQueenAt(x, x);
+		return boardState;
+	}
 	
 	
 	public static BoardState getDemoStartState4Queens(){
 		BoardState boardState = new BoardState(4);
+		boardState.placeQueenAt(0, 0);
+		boardState.placeQueenAt(1, 1);
+		boardState.placeQueenAt(2, 2);
+		boardState.placeQueenAt(3, 3);
 		return boardState;
 	}
 	public static BoardState getDemoStartState8Queens(){

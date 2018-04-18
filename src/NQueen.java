@@ -6,32 +6,46 @@ public class NQueen {
 	public static void main(String[] args) {
 		System.out.println("\nn-Queens Solver\n");
 		
+		//decide starting state through user choice
 		BoardState startState = menuChoice();
-		if (startState == null){System.out.print("exiting program........."); return;}
+		if (startState == null){System.out.print("exiting program........."); return;}		
+		System.out.println("\nStarting state:\n" + startState + "------------------");
 		
+		//do search
+		MinConflictsSearch searcher = new MinConflictsSearch(startState);
+		BoardState solution = searcher.findMinConflictsSolution();
 		
-		///////do search
-		
+		//show result
+		showResult(solution, searcher.numStepsTaken());
 		System.out.println("\nprogram end");
 	}
 	
 	
-	
+	private static void showResult(BoardState solution, int stepsTaken){
+		if (solution == null){
+			System.out.println("xxxxxFAILURE. Search exceeded " + MinConflictsSearch.MAX_STEPS + " steps without finding a solution.");
+			return;
+		}
+		
+		System.out.println("\n~~~~~~~~~~SOLTUION FOUND:\n" + solution);
+		System.out.println("Steps taken: " + stepsTaken);
+	}
 	
 	
 	
 	//-----------user input methods
 	private static BoardState menuChoice(){
-		final int CHOICE_INPUT = 1, CHOICE_DEMO_4 = 2, CHOICE_DEMO_8 = 3;
+		final int CHOICE_INPUT = 1, CHOICE_DEMO_4 = 2, CHOICE_DEMO_8 = 3, CHOICE_RANDOM_8 = 4;
 		System.out.println(
 				"===Choose an option===\n"+
 				"  1. Input queens manually\n"+
 				"  2. View demo (n=4 queens)\n"+
 				"  3. View demo (n=8 queens)\n"+
+				"  4. View random set of columns for (n=8 queens)\n"+
 				"choice: ");
-//		@SuppressWarnings("resource")
-//		int choice = (new Scanner(System.in)).nextInt();
-		int choice = CHOICE_DEMO_8;
+		@SuppressWarnings("resource")
+		int choice = (new Scanner(System.in)).nextInt();
+//		int choice = CHOICE_DEMO_8;
 		
 		switch(choice){
 		case CHOICE_INPUT:
@@ -40,6 +54,8 @@ public class NQueen {
 			return DemoBoards.getDemoStartState4Queens();
 		case CHOICE_DEMO_8:
 			return DemoBoards.getDemoStartState8Queens();
+		case CHOICE_RANDOM_8:
+			return DemoBoards.generateRandomInRows(8);
 		default:
 			return null;
 		}

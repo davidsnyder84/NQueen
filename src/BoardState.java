@@ -89,13 +89,16 @@ public class BoardState implements Comparable<BoardState>{
 		return highestColumn;
 	}
 	
-	public int randomQueenInConflict(){
+	public int getRandomQueenInConflict(){
 		ArrayList<Integer> queensInConflict = new ArrayList<Integer>();
 		for (int col=0; col<numQueens; col++)
 			if (queenIsInConflict(col))
 				queensInConflict.add(col);
 		
 		//return random queen in conflict
+		if (queensInConflict.isEmpty())
+			return -1;
+		
 		return queensInConflict.get(random.nextInt(queensInConflict.size()));
 	}
 	
@@ -124,7 +127,9 @@ public class BoardState implements Comparable<BoardState>{
 				numberOfConflicts++;
 		return numberOfConflicts;
 	}
-	public boolean queenIsInConflict(int column){return numConflictsForQueen(column) == 0;}
+	public boolean queenIsInConflict(int column){return numConflictsForQueen(column) > 0;}
+	public boolean containsNoConflicts(){return totalNumberOfConflicts() == 0;}
+	
 	
 	//returns the set of all points under attack by a queen at the given position
 	//(all points that lie in a straight/diagonal line from the queen)
