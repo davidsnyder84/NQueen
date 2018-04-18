@@ -78,15 +78,17 @@ public class Testcode {
 		
 //		boardState = DemoBoards.exampleState1CONFLICTS();
 //		System.out.print(boardState);
-//		System.out.println("#Conflicts? (want1): " + boardState.numConflicts() + "\n");
+//		System.out.println("#Conflicts? (want1): " + boardState.totalNumberOfConflicts() + "\n");
 //		
-//		boardState = DemoBoards.exampleState2CONFLICTS();
-//		System.out.print(boardState);
-//		System.out.println("#Conflicts? (want2): " + boardState.numConflicts() + "\n");
+		boardState = DemoBoards.exampleState2CONFLICTS();
+		System.out.print(boardState);
+		System.out.println("#Conflicts? (want2): " + boardState.totalNumberOfConflicts() + "\n");
+		for (int c=0;c<boardState.getNumQueens();c++)System.out.printf("conflicts for row %d: %d\n", c, boardState.numConflictsForQueenInColumnNumber(c));
+		System.out.print("column with most conflicts?: " + boardState.columnWithMostConflicts());
 //		
 //		boardState = DemoBoards.exampleState3CONFLICTS();
 //		System.out.print(boardState);
-//		System.out.println("#Conflicts? (want3): " + boardState.numConflicts() + "\n");
+//		System.out.println("#Conflicts? (want3): " + boardState.totalNumberOfConflicts() + "\n");
 		
 		
 		
@@ -95,15 +97,16 @@ public class Testcode {
 //		for (int y = 0; y<8; y++){
 //			boardState = DemoBoards.e1base();
 //			boardState.placeQueenAt(7, y);
-//			System.out.println("#Conflicts? (want " + want[y] + "): " + boardState.numConflicts());
+//			System.out.println("#Conflicts? (want " + want[y] + "): " + boardState.totalNumberOfConflicts());
 //		}
-		
-		want = new int[]{3,3,1,2,3,2,3,0};
-		for (int y = 0; y<8; y++){
-			boardState = DemoBoards.e2base();
-			boardState.placeQueenAt(5, y);
-			System.out.println("#Conflicts? (want " + want[y] + "): " + boardState.numConflicts());
-		}
+//		System.out.println("\n");
+//		
+//		want = new int[]{3,3,1,2,3,2,3,0};
+//		for (int y = 0; y<8; y++){
+//			boardState = DemoBoards.e2base();
+//			boardState.placeQueenAt(5, y);
+//			System.out.println("#Conflicts? (want " + want[y] + "): " + boardState.totalNumberOfConflicts());
+//		}
 		
 	}
 }

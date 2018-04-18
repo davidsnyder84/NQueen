@@ -38,27 +38,66 @@ public class BoardState {
 	
 	
 	//list of possibile successor states (child states / states that can be reached by making a single move)
-	public ArrayList<BoardState> listOfPossibleSuccessorStates(){
+	public ArrayList<BoardState> listOfPossibleSuccessorStatesForColumn(int desiredColumn){
 		ArrayList<BoardState> successorStates = new ArrayList<BoardState>();
+		Point queenSpace = queenInColumnNumber(desiredColumn);
 		
+		//set of blank spaces in the column (possible spaces where the queen can move within the column)
+		HashSet<Point> blankSpaces = new HashSet<Point>();
+		for (int row = 0; row < numQueens; row++)
+			blankSpaces.add(new Point(desiredColumn, row));
+		blankSpaces.remove(queenSpace);
 		
+		//generate a successor state for each blank space the queen can move to
+		for (Point destination: blankSpaces){
+			BoardState successor = new BoardState(this);
+			successor.removeQueenAt(queenSpace);
+			successor.placeQueenAt(destination);
+			successorStates.add(successor);
+		}
 		
 		return successorStates;
 	}
 	
 	
+	//returns the column which has the most conflicts (ie, column #3)
+	public int columnWithMostConflicts(){
+		int[] columnConflicts = new int[numQueens];
+		int highestSeen = 0;
+		for (int col = 0; col < numQueens; col++){
+			columnConflicts[col] = numConflictsForQueenInColumnNumber(col);
+			if (highestSeen < columnConflicts[col])
+				highestSeen = columnConflicts[col];
+		}
+		
+		int highestColumn = -1;
+		for (int col = 0; col < numQueens; col++)
+			if (columnConflicts[col] == highestSeen)
+				highestColumn = col;
+		
+		return highestColumn;
+	}
 	
-	//returns the number of pairs of queens that are attacking each other
-	public int numConflicts(){
-		int numberOfAttacks = 0;
-		for (Point attackerQueen: queenPositions)
-			for (Point defenderQueen: queenPositions)
-				//queens are attacking each other if one them lies in the line of fire of the other
-				if (lineOfFireOf(attackerQueen).contains(defenderQueen))
-					numberOfAttacks++;
+	
+	
+	//returns the total number of pairs of queens that are attacking each other
+	public int totalNumberOfConflicts(){
+		int numberOfConflicts = 0;
+		for (int column = 0; column < numQueens; column++)
+			numberOfConflicts += numConflictsForQueenInColumnNumber(column);
 		
 		//cut in half, because we counted each pair attacking each other twice
-		return numberOfAttacks / 2;
+		return numberOfConflicts / 2;
+	}
+	//returns the number of conflicts for a single given queen
+	public int numConflictsForQueenInColumnNumber(int desiredColumn){
+		Point thisQueen = queenInColumnNumber(desiredColumn);
+		int numberOfConflicts = 0;
+		for (Point enemyQueen: queenPositions)
+			//queens are in conflict if one them lies in the line of fire of the other
+			if (lineOfFireOf(thisQueen).contains(enemyQueen))
+				numberOfConflicts++;
+		return numberOfConflicts;
 	}
 	
 	//returns the set of all points under attack by a queen at the given position
@@ -104,6 +143,12 @@ public class BoardState {
 	
 	
 	
+	public Point queenInColumnNumber(int desiredColumn){
+		for (Point p: queenPositions)
+			if (p.x == desiredColumn)
+				return p;
+		return null;
+	}
 	
 	
 	
