@@ -14,13 +14,26 @@ public class Testcode {
 //		equaltest();
 //		fire();
 //		numConflicts();
-
+		successor();
+		
 //		BoardState boardState = new BoardState();
 //		boardState.placeQueenAt(0,1);
 //		boardState.placeQueenAt(0,2);
 //		System.out.println(boardState);
 		
 		
+	}
+	
+	private static void successor(){
+		
+		BoardState boardState = DemoBoards.sampleStartState();
+		boardState.successorStatesForQueen(7);
+		for (BoardState b: boardState.successorStatesForQueen(7))
+			System.out.println(b.toString() + b.totalNumberOfConflicts() + "\n");
+		
+		
+		BoardState least = boardState.successorStateWithLeastConflictsForQueen(7);
+		System.out.println("\nState with least (" + least.totalNumberOfConflicts() + "):\n" + least);
 	}
 	
 	private static void equaltest(){

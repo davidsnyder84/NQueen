@@ -42,12 +42,12 @@ public class BoardState implements Comparable<BoardState>{
 	
 	
 	//list of possibile successor states (child states / states that can be reached by making a single move)
-	public ArrayList<BoardState> listOfPossibleSuccessorStatesForQueen(int desiredColumn){
+	public ArrayList<BoardState> successorStatesForQueen(int desiredColumn){
 		ArrayList<BoardState> successorStates = new ArrayList<BoardState>();
 		Point queenSpace = queenInColumnNumber(desiredColumn);
 		
 		//set of blank spaces in the column (possible spaces where the queen can move within the column)
-		HashSet<Point> blankSpaces = new HashSet<Point>();
+		ArrayList<Point> blankSpaces = new ArrayList<Point>();
 		for (int row = 0; row < numQueens; row++)
 			blankSpaces.add(new Point(desiredColumn, row));
 		blankSpaces.remove(queenSpace);
@@ -64,7 +64,7 @@ public class BoardState implements Comparable<BoardState>{
 	}
 	
 	public BoardState successorStateWithLeastConflictsForQueen(int columnNum){
-		ArrayList<BoardState> allSuccessors = listOfPossibleSuccessorStatesForQueen(columnNum);
+		ArrayList<BoardState> allSuccessors = successorStatesForQueen(columnNum);
 		Collections.shuffle(allSuccessors);
 		Collections.sort(allSuccessors);
 		return allSuccessors.get(0);
@@ -165,7 +165,7 @@ public class BoardState implements Comparable<BoardState>{
 	
 	//returns true if the coordinate exists on the board (it is within the board's boundaries)
 	private boolean validCoordinate(Point p){return (p.x >= 0 && p.y >= 0 && p.x < numQueens && p.y < numQueens);}
-	private boolean validCoordinate(int x, int y){return validCoordinate(new Point(x,y));}
+//	private boolean validCoordinate(int x, int y){return validCoordinate(new Point(x,y));}
 	
 	
 	

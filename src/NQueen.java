@@ -6,11 +6,8 @@ public class NQueen {
 	public static void main(String[] args) {
 		System.out.println("\nn-Queens Solver\n");
 		
-		BoardState startState = menuChoice();		
-		if (startState == null){
-			System.out.print("exiting program.........");
-			return;
-		}
+		BoardState startState = menuChoice();
+		if (startState == null){System.out.print("exiting program........."); return;}
 		
 		
 		///////do search
