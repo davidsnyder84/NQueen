@@ -3,6 +3,7 @@
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 
 
@@ -12,7 +13,7 @@ public class Testcode {
 	public static void main(String[] args){
 //		equaltest();
 //		fire();
-		numConflicts();
+//		numConflicts();
 
 //		BoardState boardState = new BoardState();
 //		boardState.placeQueenAt(0,1);
@@ -83,7 +84,7 @@ public class Testcode {
 		boardState = DemoBoards.exampleState2CONFLICTS();
 		System.out.print(boardState);
 		System.out.println("#Conflicts? (want2): " + boardState.totalNumberOfConflicts() + "\n");
-		for (int c=0;c<boardState.getNumQueens();c++)System.out.printf("conflicts for row %d: %d\n", c, boardState.numConflictsForQueenInColumnNumber(c));
+		for (int c=0;c<boardState.getNumQueens();c++)System.out.printf("conflicts for row %d: %d\n", c, boardState.numConflictsForQueen(c));
 		System.out.print("column with most conflicts?: " + boardState.columnWithMostConflicts());
 //		
 //		boardState = DemoBoards.exampleState3CONFLICTS();

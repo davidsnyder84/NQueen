@@ -2,9 +2,11 @@
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 
-public class BoardState {
+public class BoardState implements Comparable<BoardState>{
 	public static final int DEFAULT_NUM_QUEENS = 4;
 	public static final char SYMBOL_BLANK = 'o';
 	public static final char SYMBOL_QUEEN = 'X';
@@ -38,7 +40,7 @@ public class BoardState {
 	
 	
 	//list of possibile successor states (child states / states that can be reached by making a single move)
-	public ArrayList<BoardState> listOfPossibleSuccessorStatesForColumn(int desiredColumn){
+	public ArrayList<BoardState> listOfPossibleSuccessorStatesForQueen(int desiredColumn){
 		ArrayList<BoardState> successorStates = new ArrayList<BoardState>();
 		Point queenSpace = queenInColumnNumber(desiredColumn);
 		
@@ -59,13 +61,19 @@ public class BoardState {
 		return successorStates;
 	}
 	
+	public BoardState successorStateWithLeastConflictsForQueen(int columnNum){
+		ArrayList<BoardState> allSuccessors = listOfPossibleSuccessorStatesForQueen(columnNum);
+		Collections.sort(allSuccessors);
+		return allSuccessors.get(0);
+	}
+	
 	
 	//returns the column which has the most conflicts (ie, column #3)
 	public int columnWithMostConflicts(){
 		int[] columnConflicts = new int[numQueens];
 		int highestSeen = 0;
 		for (int col = 0; col < numQueens; col++){
-			columnConflicts[col] = numConflictsForQueenInColumnNumber(col);
+			columnConflicts[col] = numConflictsForQueen(col);
 			if (highestSeen < columnConflicts[col])
 				highestSeen = columnConflicts[col];
 		}
@@ -84,13 +92,13 @@ public class BoardState {
 	public int totalNumberOfConflicts(){
 		int numberOfConflicts = 0;
 		for (int column = 0; column < numQueens; column++)
-			numberOfConflicts += numConflictsForQueenInColumnNumber(column);
+			numberOfConflicts += numConflictsForQueen(column);
 		
 		//cut in half, because we counted each pair attacking each other twice
 		return numberOfConflicts / 2;
 	}
 	//returns the number of conflicts for a single given queen
-	public int numConflictsForQueenInColumnNumber(int desiredColumn){
+	public int numConflictsForQueen(int desiredColumn){
 		Point thisQueen = queenInColumnNumber(desiredColumn);
 		int numberOfConflicts = 0;
 		for (Point enemyQueen: queenPositions)
@@ -157,6 +165,11 @@ public class BoardState {
 	public boolean equals(Object o){
 		BoardState other = (BoardState) o;
 		return queenPositions.equals(other.queenPositions);
+	}
+	//order states in order of how many conflicts
+	@Override
+	public int compareTo(BoardState other) {
+		return this.totalNumberOfConflicts() - other.totalNumberOfConflicts();
 	}
 	
 	public String toString(){
