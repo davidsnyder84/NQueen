@@ -1,5 +1,38 @@
+//David Snyder a247a342 cs771 prog2
+
+import java.util.Random;
+
 
 public class DemoBoards {
+	
+	
+	
+	
+	
+	
+	public static void main(String[] ar){generateRandomInRows(8);}
+	
+	public static BoardState generateRandomInRows(int numQueens){
+		Random random = new Random();
+		BoardState boardState = new BoardState();
+		for (int x=0; x<numQueens; x++)
+			boardState.placeQueenAt(x, random.nextInt(numQueens));
+		return boardState;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	public static BoardState sampleStartState(){
+		BoardState boardState = e1base();
+		boardState.placeQueenAt(7, 7);
+		return boardState;
+	}
+	
 	
 	public static BoardState exampleState1CONFLICTS(){
 		BoardState boardState = e1base();

@@ -1,3 +1,5 @@
+//David Snyder a247a342 cs771 prog2
+
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;

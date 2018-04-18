@@ -1,9 +1,7 @@
-//David Snyder a247a342 cs771 prog1
+//David Snyder a247a342 cs771 prog2
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 
 public class BoardState {
@@ -48,29 +46,23 @@ public class BoardState {
 	}
 	
 	
-	//returns true if the coordinate exists on the board (it is within the board's boundaries)
-	private boolean validCoordinate(Point p){return (p.x >= 0 && p.y >= 0 && p.x < numQueens && p.y < numQueens);}
-	private boolean validCoordinate(int x, int y){return validCoordinate(new Point(x,y));}
 	
-	
+	//returns the number of pairs of queens that are attacking each other
 	public int numConflicts(){
-		int numberOfAttacks = 0;		
-		for (Point currentQueen: queenPositions)
-			for (Point enemyQueen: queenPositions)
-				if (areAttackingEachOther(enemyQueen, currentQueen))
+		int numberOfAttacks = 0;
+		for (Point attackerQueen: queenPositions)
+			for (Point defenderQueen: queenPositions)
+				//queens are attacking each other if one them lies in the line of fire of the other
+				if (lineOfFireOf(attackerQueen).contains(defenderQueen))
 					numberOfAttacks++;
 		
 		//cut in half, because we counted each pair attacking each other twice
 		return numberOfAttacks / 2;
 	}
-	private boolean areAttackingEachOther(Point attackerPosition, Point defenderPosition){
-		//queens are attacking each other if one them in the line of fire of the other
-		return lineOfFireOfQueenAt(attackerPosition).contains(defenderPosition);
-	}
 	
 	//returns the set of all points under attack by a queen at the given position
 	//(all points that lie in a straight/diagonal line from the queen)
-	public HashSet<Point> lineOfFireOfQueenAt(Point queenPosition){
+	public HashSet<Point> lineOfFireOf(Point queenPosition){
 		HashSet<Point> lineOfFire = new HashSet<Point>();
 		
 		lineOfFire.addAll(crawlFrom(queenPosition, Crawl.UP));
@@ -84,7 +76,7 @@ public class BoardState {
 		
 		return lineOfFire;
 	}
-	public HashSet<Point> lineOfFireOfQueenAt(int x, int y){return lineOfFireOfQueenAt(new Point(x,y));}
+	public HashSet<Point> lineOfFireOfQueenAt(int x, int y){return lineOfFireOf(new Point(x,y));}
 	
 	
 	//returns the set of points the lie in a straight line from point P in the given crawl direction
@@ -105,6 +97,9 @@ public class BoardState {
 		private Crawl(int x, int y){xmod=x; ymod=y;}
 	}
 	
+	//returns true if the coordinate exists on the board (it is within the board's boundaries)
+	private boolean validCoordinate(Point p){return (p.x >= 0 && p.y >= 0 && p.x < numQueens && p.y < numQueens);}
+	private boolean validCoordinate(int x, int y){return validCoordinate(new Point(x,y));}
 	
 	
 	
