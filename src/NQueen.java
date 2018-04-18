@@ -21,6 +21,8 @@ public class NQueen {
 	
 	
 	
+	
+	
 	//-----------user input methods
 	private static BoardState menuChoice(){
 		final int CHOICE_INPUT = 1, CHOICE_DEMO_4 = 2, CHOICE_DEMO_8 = 3;

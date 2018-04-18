@@ -11,19 +11,19 @@ public class BoardState {
 	
 	
 	private int numQueens;
-	private ArrayList<Point> queenPositions;
+	private HashSet<Point> queenPositions;
 	
 	
 	public BoardState(int numberOfQueens) {
 		numQueens = numberOfQueens;		
-		queenPositions = new ArrayList<Point>();
+		queenPositions = new HashSet<Point>();
 	}
 	public BoardState(){this(DEFAULT_NUM_QUEENS);}
 	
 	//copy constructor
 	public BoardState(BoardState other){
 		numQueens = other.numQueens;
-		queenPositions = new ArrayList<Point>(other.queenPositions);
+		queenPositions = new HashSet<Point>(other.queenPositions);
 	}
 	
 	
