@@ -60,10 +60,10 @@ public class BoardState {
 		return 999;
 	}
 	
+	//returns the set of all points under attack by a queen at the given position
+	//(all points that lie in a straight/diagonal line from the queen)
 	public HashSet<Point> lineOfFireOfQueenAt(Point queenPosition){
 		HashSet<Point> lineOfFire = new HashSet<Point>();
-		
-		
 		
 		lineOfFire.addAll(crawlFrom(queenPosition, Crawl.UP));
 		lineOfFire.addAll(crawlFrom(queenPosition, Crawl.DOWN));
@@ -74,58 +74,27 @@ public class BoardState {
 		lineOfFire.addAll(crawlFrom(queenPosition, Crawl.DIAG_UPRIGHT));
 		lineOfFire.addAll(crawlFrom(queenPosition, Crawl.DIAG_DOWNLEFT));
 		
-//		//horizontal/vertical
-//		for (int i = 0; i < numQueens; i++){
-//			lineOfFire.add(new Point(i, queenPosition.y));	//horizontal line of fire
-//			lineOfFire.add(new Point(queenPosition.x, i));	//vertical line of fire
-//		}
-//		lineOfFire.remove(queenPosition);
-//		
-//		//diagonals
-//		Point upLeftDiagonalCrawler = new Point(queenPosition.x - 1, queenPosition.y - 1);
-//		while (validCoordinate(upLeftDiagonalCrawler)){
-//			lineOfFire.add(new Point(upLeftDiagonalCrawler));
-//			upLeftDiagonalCrawler.y -= 1; upLeftDiagonalCrawler.x -= 1;
-//		}
-//		
-//		Point upRightDiagonalCrawler = new Point(queenPosition.x + 1, queenPosition.y + 1);
-//		while (validCoordinate(upRightDiagonalCrawler)){
-//			lineOfFire.add(new Point(upRightDiagonalCrawler));
-//			upRightDiagonalCrawler.y += 1; upRightDiagonalCrawler.x += 1;
-//		}
-//		for (Point p: lineOfFire) System.out.println(p.x + "," + p.y);
-		
 		return lineOfFire;
 	}
 	public HashSet<Point> lineOfFireOfQueenAt(int x, int y){return lineOfFireOfQueenAt(new Point(x,y));}
 	
 	
-	
-	public HashSet<Point> crawlFrom(Point p, Crawl crawl){
+	//returns the set of points the lie in a straight line from point P in the given crawl direction
+	public HashSet<Point> crawlFrom(Point p, Crawl crawlDirection){
 		HashSet<Point> lineOfFire = new HashSet<Point>();
-		Point crawler = new Point(p.x + crawl.xmod, p.y + crawl.ymod);
+		Point crawler = new Point(p.x + crawlDirection.xmod, p.y + crawlDirection.ymod);
 		while (validCoordinate(crawler)){
 			lineOfFire.add(new Point(crawler));
-			crawler.x += crawl.xmod; crawler.y += crawl.ymod;
+			crawler.x += crawlDirection.xmod; crawler.y += crawlDirection.ymod;
 		}
 		
 		return lineOfFire;
 	}
-	
 	private enum Crawl{
-		UP(0,-1),
-		DOWN(0,1),
-		LEFT(-1,0),
-		RIGHT(1,0),
-		DIAG_UPLEFT(-1,-1),
-		DIAG_UPRIGHT(1,-1),
-		DIAG_DOWNLEFT(-1,1),
-		DIAG_DOWNRIGHT(1,1);
+		UP(0,-1), DOWN(0,1), LEFT(-1,0), RIGHT(1,0),
+		DIAG_UPLEFT(-1,-1), DIAG_UPRIGHT(1,-1), DIAG_DOWNLEFT(-1,1), DIAG_DOWNRIGHT(1,1);
 		private int xmod, ymod;
-		
-		private Crawl(int xshift, int yshift){
-			xmod=xshift; ymod=yshift;
-		}
+		private Crawl(int x, int y){xmod=x; ymod=y;}
 	}
 	
 	

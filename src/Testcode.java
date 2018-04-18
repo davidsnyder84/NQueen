@@ -10,7 +10,7 @@ public class Testcode {
 	public static void main(String[] args){
 //		equaltest();
 		fire();
-		
+		numConflicts();
 		
 		
 //		Point p = new Point(0,0);
@@ -68,5 +68,11 @@ public class Testcode {
 		
 //		HashSet<Point> h = new HashSet<Point>(fireline);
 //		for (Point p: h) System.out.println(p.x+","+p.y);
+	}
+	
+	
+	private static void numConflicts(){
+		BoardState boardState = new BoardState();
+		System.out.println(boardState);		
 	}
 }
