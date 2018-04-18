@@ -1,5 +1,6 @@
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 
 public class Testcode {
@@ -45,6 +46,10 @@ public class Testcode {
 			boardState.placeQueenAt(p);
 		
 		
+		
 		System.out.println(boardState);
+		
+		HashSet<Point> h = new HashSet<Point>(fireline);
+		for (Point p: h) System.out.println(p.x+","+p.y);
 	}
 }

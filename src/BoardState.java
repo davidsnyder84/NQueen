@@ -2,6 +2,9 @@
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
 
 public class BoardState {
 	public static final int DEFAULT_NUM_QUEENS = 4;
@@ -53,6 +56,7 @@ public class BoardState {
 	
 	
 	public int numConflicts(){
+		
 		return 999;
 	}
 	
@@ -64,24 +68,27 @@ public class BoardState {
 			lineOfFire.add(new Point(i, queenPosition.y));	//horizontal line of fire
 			lineOfFire.add(new Point(queenPosition.x, i));	//vertical line of fire
 		}
-		lineOfFire.remove(queenPosition);
+//		lineOfFire.remove(queenPosition);
+//		lineOfFire.remove(queenPosition);
 		
 		//diagonals
 		Point upLeftDiagonalCrawler = new Point(queenPosition.x - 1, queenPosition.y - 1);
 		while (validCoordinate(upLeftDiagonalCrawler)){
-			lineOfFire.add(upLeftDiagonalCrawler);
+			lineOfFire.add(new Point(upLeftDiagonalCrawler));
 			upLeftDiagonalCrawler.y -= 1; upLeftDiagonalCrawler.x -= 1;
 		}
 		
 		Point upRightDiagonalCrawler = new Point(queenPosition.x + 1, queenPosition.y + 1);
 		while (validCoordinate(upRightDiagonalCrawler)){
-			lineOfFire.add(upRightDiagonalCrawler);
+			lineOfFire.add(new Point(upRightDiagonalCrawler));
 			upRightDiagonalCrawler.y += 1; upRightDiagonalCrawler.x += 1;
 		}
 		for (Point p: lineOfFire) System.out.println(p.x + "," + p.y);
+		
 		return lineOfFire;
 	}
 	public ArrayList<Point> lineOfFireOfQueenAt(int x, int y){return lineOfFireOfQueenAt(new Point(x,y));}
+	
 	
 	
 	
