@@ -2,14 +2,15 @@
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Random;
 
 public class BoardState implements Comparable<BoardState>{
 	public static final int DEFAULT_NUM_QUEENS = 4;
 	public static final char SYMBOL_BLANK = 'o';
 	public static final char SYMBOL_QUEEN = 'X';
+	private static final Random random = new Random();
 	
 	
 	private int numQueens;
@@ -39,6 +40,7 @@ public class BoardState implements Comparable<BoardState>{
 	
 	
 	
+	
 	//list of possibile successor states (child states / states that can be reached by making a single move)
 	public ArrayList<BoardState> listOfPossibleSuccessorStatesForQueen(int desiredColumn){
 		ArrayList<BoardState> successorStates = new ArrayList<BoardState>();
@@ -63,13 +65,14 @@ public class BoardState implements Comparable<BoardState>{
 	
 	public BoardState successorStateWithLeastConflictsForQueen(int columnNum){
 		ArrayList<BoardState> allSuccessors = listOfPossibleSuccessorStatesForQueen(columnNum);
+		Collections.shuffle(allSuccessors);
 		Collections.sort(allSuccessors);
 		return allSuccessors.get(0);
 	}
 	
 	
 	//returns the column which has the most conflicts (ie, column #3)
-	public int columnWithMostConflicts(){
+	public int queenWithMostConflicts(){
 		int[] columnConflicts = new int[numQueens];
 		int highestSeen = 0;
 		for (int col = 0; col < numQueens; col++){
@@ -85,6 +88,20 @@ public class BoardState implements Comparable<BoardState>{
 		
 		return highestColumn;
 	}
+	
+	public int randomQueenInConflict(){
+		ArrayList<Integer> queensInConflict = new ArrayList<Integer>();
+		for (int col=0; col<numQueens; col++)
+			if (queenIsInConflict(col))
+				queensInConflict.add(col);
+		
+		//return random queen in conflict
+		return queensInConflict.get(random.nextInt(queensInConflict.size()));
+	}
+	
+	
+	
+	
 	
 	
 	
@@ -107,6 +124,7 @@ public class BoardState implements Comparable<BoardState>{
 				numberOfConflicts++;
 		return numberOfConflicts;
 	}
+	public boolean queenIsInConflict(int column){return numConflictsForQueen(column) == 0;}
 	
 	//returns the set of all points under attack by a queen at the given position
 	//(all points that lie in a straight/diagonal line from the queen)

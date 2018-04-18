@@ -85,7 +85,7 @@ public class Testcode {
 		System.out.print(boardState);
 		System.out.println("#Conflicts? (want2): " + boardState.totalNumberOfConflicts() + "\n");
 		for (int c=0;c<boardState.getNumQueens();c++)System.out.printf("conflicts for row %d: %d\n", c, boardState.numConflictsForQueen(c));
-		System.out.print("column with most conflicts?: " + boardState.columnWithMostConflicts());
+		System.out.print("column with most conflicts?: " + boardState.queenWithMostConflicts());
 //		
 //		boardState = DemoBoards.exampleState3CONFLICTS();
 //		System.out.print(boardState);
