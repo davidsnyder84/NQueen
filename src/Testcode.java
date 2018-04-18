@@ -9,16 +9,16 @@ public class Testcode {
 	
 	public static void main(String[] args){
 //		equaltest();
-		fire();
-		numConflicts();
+//		fire();
+//		numConflicts();
+
+		BoardState boardState = new BoardState();
+		boardState.placeQueenAt(0,1);
+		boardState.placeQueenAt(0,2);
+//		boardState.removeQueenAt(2, 3);
+		System.out.println(boardState);
 		
 		
-//		Point p = new Point(0,0);
-//		System.out.println(p.x + "," + p.y);
-//		p.x+=1;
-//		System.out.println(p.x + "," + p.y);
-//		p.x+=1;
-//		System.out.println(p.x + "," + p.y);
 	}
 	
 	private static void equaltest(){
@@ -73,6 +73,34 @@ public class Testcode {
 	
 	private static void numConflicts(){
 		BoardState boardState = new BoardState();
-		System.out.println(boardState);		
+		
+		boardState = DemoBoards.exampleState1CONFLICTS();
+		System.out.print(boardState);
+		System.out.println("#Conflicts? (want1): " + boardState.numConflicts() + "\n");
+		
+		boardState = DemoBoards.exampleState2CONFLICTS();
+		System.out.print(boardState);
+		System.out.println("#Conflicts? (want2): " + boardState.numConflicts() + "\n");
+		
+		boardState = DemoBoards.exampleState3CONFLICTS();
+		System.out.print(boardState);
+		System.out.println("#Conflicts? (want3): " + boardState.numConflicts() + "\n");
+		
+//		for (int y = 0; y<8; y++){
+//			boardState = DemoBoards.e1base();
+//			boardState.placeQueenAt(7, y);
+//			
+////			System.out.print(boardState);
+//			System.out.println("#Conflicts?: " + boardState.numConflicts());
+//		}
+		
+//		for (int y = 0; y<8; y++){
+//			boardState = DemoBoards.e2base();
+//			boardState.placeQueenAt(5, y);
+//			
+////			System.out.print(boardState);
+//			System.out.println("#Conflicts?: " + boardState.numConflicts());
+//		}
+		
 	}
 }

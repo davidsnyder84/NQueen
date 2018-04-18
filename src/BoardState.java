@@ -8,8 +8,6 @@ import java.util.HashSet;
 
 public class BoardState {
 	public static final int DEFAULT_NUM_QUEENS = 4;
-	public static final int LEFTMOST_POSITION = 0;
-	public static final int UPMOST_POSITION = 0;
 	public static final char SYMBOL_BLANK = 'o';
 	public static final char SYMBOL_QUEEN = 'X';
 	
@@ -18,8 +16,8 @@ public class BoardState {
 	private ArrayList<Point> queenPositions;
 	
 	
-	public BoardState(int gridsize) {
-		numQueens = gridsize;		
+	public BoardState(int numberOfQueens) {
+		numQueens = numberOfQueens;		
 		queenPositions = new ArrayList<Point>();
 	}
 	public BoardState(){this(DEFAULT_NUM_QUEENS);}
@@ -56,8 +54,18 @@ public class BoardState {
 	
 	
 	public int numConflicts(){
+		int numberOfAttacks = 0;		
+		for (Point currentQueen: queenPositions)
+			for (Point enemyQueen: queenPositions)
+				if (areAttackingEachOther(enemyQueen, currentQueen))
+					numberOfAttacks++;
 		
-		return 999;
+		//cut in half, because we counted each pair attacking each other twice
+		return numberOfAttacks / 2;
+	}
+	private boolean areAttackingEachOther(Point attackerPosition, Point defenderPosition){
+		//queens are attacking each other if one them in the line of fire of the other
+		return lineOfFireOfQueenAt(attackerPosition).contains(defenderPosition);
 	}
 	
 	//returns the set of all points under attack by a queen at the given position
@@ -90,7 +98,7 @@ public class BoardState {
 		
 		return lineOfFire;
 	}
-	private enum Crawl{
+	private static enum Crawl{
 		UP(0,-1), DOWN(0,1), LEFT(-1,0), RIGHT(1,0),
 		DIAG_UPLEFT(-1,-1), DIAG_UPRIGHT(1,-1), DIAG_DOWNLEFT(-1,1), DIAG_DOWNRIGHT(1,1);
 		private int xmod, ymod;
