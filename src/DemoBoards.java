@@ -2,15 +2,8 @@
 
 import java.util.Random;
 
-
-public class DemoBoards {
-	
-	
-	
-	
-	
-	
-//	public static void main(String[] ar){generateRandomInRows(8);}
+//contains sample starting states
+public class DemoBoards {	
 	
 	public static BoardState generateRandomInRows(int numQueens){
 		BoardState boardState = new BoardState(numQueens);

@@ -1,6 +1,8 @@
 //David Snyder a247a342 cs771 prog2
+
 import java.util.Scanner;
 
+//main program
 public class NQueen {
 	
 	public static void main(String[] args) {
@@ -20,7 +22,6 @@ public class NQueen {
 		System.out.println("\nprogram end");
 	}
 	
-	
 	private static void showResult(BoardState solution, int stepsTaken){
 		if (solution == null){
 			System.out.println("xxxxxFAILURE. Search exceeded " + MinConflictsSearch.MAX_STEPS + " steps without finding a solution.");
@@ -30,6 +31,9 @@ public class NQueen {
 		System.out.println("\n~~~~~~~~~~SOLTUION FOUND:\n" + solution);
 		System.out.println("Steps taken: " + stepsTaken);
 	}
+	
+	
+	
 	
 	
 	
@@ -45,7 +49,7 @@ public class NQueen {
 				"choice: ");
 		@SuppressWarnings("resource")
 		int choice = (new Scanner(System.in)).nextInt();
-//		int choice = CHOICE_DEMO_8;
+//		int choice = 4;
 		
 		switch(choice){
 		case CHOICE_INPUT:
@@ -64,7 +68,6 @@ public class NQueen {
 	private static BoardState userInputBoard(){
 		int numQueens = askForNumQueens();
 		BoardState boardInput = askForQueenPositions(numQueens);
-		System.out.println(boardInput);
 		return boardInput;
 	}
 	

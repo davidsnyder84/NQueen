@@ -6,23 +6,20 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Random;
 
+//Represents a board with an arrangement of n queens (one per column)
 public class BoardState implements Comparable<BoardState>{
 	public static final int DEFAULT_NUM_QUEENS = 4;
-	public static final char SYMBOL_BLANK = 'o';
-	public static final char SYMBOL_QUEEN = 'X';
+	public static final char SYMBOL_BLANK = 'o', SYMBOL_QUEEN = 'X';
 	private static final Random random = new Random();
-	
 	
 	private int numQueens;
 	private HashSet<Point> queenPositions;
-	
 	
 	public BoardState(int numberOfQueens) {
 		numQueens = numberOfQueens;		
 		queenPositions = new HashSet<Point>();
 	}
 	public BoardState(){this(DEFAULT_NUM_QUEENS);}
-	
 	//copy constructor
 	public BoardState(BoardState other){
 		numQueens = other.numQueens;
@@ -41,7 +38,7 @@ public class BoardState implements Comparable<BoardState>{
 	
 	
 	
-	//list of possibile successor states (child states / states that can be reached by making a single move)
+	//list of possibile successor states that can be reached by moving the queen within the given column
 	public ArrayList<BoardState> successorStatesForQueen(int desiredColumn){
 		ArrayList<BoardState> successorStates = new ArrayList<BoardState>();
 		Point queenSpace = queenInColumnNumber(desiredColumn);
@@ -63,50 +60,31 @@ public class BoardState implements Comparable<BoardState>{
 		return successorStates;
 	}
 	
+	//returns the successor state that has the least number of conflicts for the given column
 	public BoardState successorStateWithLeastConflictsForQueen(int columnNum){
 		ArrayList<BoardState> allSuccessors = successorStatesForQueen(columnNum);
+		//shuffle, so tiebreakers bewteen states with the same number of conflicts will be decided arbitrarily
 		Collections.shuffle(allSuccessors);
+		
+		//the state with the least amount of conflicts will be at the head of the list after sorting
 		Collections.sort(allSuccessors);
 		return allSuccessors.get(0);
 	}
 	
 	
-	//returns the column which has the most conflicts (ie, column #3)
-	public int queenWithMostConflicts(){
-		int[] columnConflicts = new int[numQueens];
-		int highestSeen = 0;
-		for (int col = 0; col < numQueens; col++){
-			columnConflicts[col] = numConflictsForQueen(col);
-			if (highestSeen < columnConflicts[col])
-				highestSeen = columnConflicts[col];
-		}
-		
-		int highestColumn = -1;
-		for (int col = 0; col < numQueens; col++)
-			if (columnConflicts[col] == highestSeen)
-				highestColumn = col;
-		
-		return highestColumn;
-	}
 	
+	
+	
+	
+	//returns the column number of a random queen in conflict
 	public int getRandomQueenInConflict(){
 		ArrayList<Integer> queensInConflict = new ArrayList<Integer>();
 		for (int col=0; col<numQueens; col++)
 			if (queenIsInConflict(col))
 				queensInConflict.add(col);
 		
-		//return random queen in conflict
-		if (queensInConflict.isEmpty())
-			return -1;
-		
 		return queensInConflict.get(random.nextInt(queensInConflict.size()));
 	}
-	
-	
-	
-	
-	
-	
 	
 	//returns the total number of pairs of queens that are attacking each other
 	public int totalNumberOfConflicts(){
@@ -170,8 +148,6 @@ public class BoardState implements Comparable<BoardState>{
 	
 	//returns true if the coordinate exists on the board (it is within the board's boundaries)
 	private boolean validCoordinate(Point p){return (p.x >= 0 && p.y >= 0 && p.x < numQueens && p.y < numQueens);}
-//	private boolean validCoordinate(int x, int y){return validCoordinate(new Point(x,y));}
-	
 	
 	
 	public Point queenInColumnNumber(int desiredColumn){
