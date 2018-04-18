@@ -24,6 +24,15 @@ public class DemoBoards {
 	
 	
 	
+	public static BoardState getDemoStartState4Queens(){
+		BoardState boardState = new BoardState(4);
+		return boardState;
+	}
+	public static BoardState getDemoStartState8Queens(){
+		BoardState boardState = new BoardState(8);
+		boardState = sampleStartState();
+		return boardState;
+	}
 	
 	
 	

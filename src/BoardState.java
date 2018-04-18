@@ -27,6 +27,7 @@ public class BoardState {
 	}
 	
 	
+	public int getNumQueens(){return numQueens;}
 	
 	public void placeQueenAt(Point p){queenPositions.add(p);}
 	public void placeQueenAt(int x, int y){placeQueenAt(new Point (x,y));}

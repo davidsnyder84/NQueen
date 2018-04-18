@@ -4,37 +4,46 @@ import java.util.Scanner;
 public class NQueen {
 	
 	public static void main(String[] args) {
-		final int CHOICE_INPUT = 1, CHOICE_DEMO_4 = 2, CHOICE_DEMO_8 = 3;
 		System.out.println("\nn-Queens Solver\n");
+		
+		BoardState startState = menuChoice();		
+		if (startState == null){
+			System.out.print("exiting program.........");
+			return;
+		}
+		
+		
+		///////do search
+		
+		System.out.println("\nprogram end");
+	}
+	
+	
+	
+	
+	//-----------user input methods
+	private static BoardState menuChoice(){
+		final int CHOICE_INPUT = 1, CHOICE_DEMO_4 = 2, CHOICE_DEMO_8 = 3;
 		System.out.println(
 				"===Choose an option===\n"+
 				"  1. Input queens manually\n"+
 				"  2. View demo (n=4 queens)\n"+
 				"  3. View demo (n=8 queens)\n"+
 				"choice: ");
-		@SuppressWarnings("resource")
-		int choice = (new Scanner(System.in)).nextInt();
-//		int choice = CHOICE_DEMO_8;
+//		@SuppressWarnings("resource")
+//		int choice = (new Scanner(System.in)).nextInt();
+		int choice = CHOICE_DEMO_8;
 		
 		switch(choice){
 		case CHOICE_INPUT:
-			userInputBoard();
-			break;
+			return userInputBoard();
 		case CHOICE_DEMO_4:
-			break;
+			return DemoBoards.getDemoStartState4Queens();
 		case CHOICE_DEMO_8:
-			break;
+			return DemoBoards.getDemoStartState8Queens();
 		default:
-			System.out.print("exiting program.........");
-			return;
+			return null;
 		}
-		
-		sample();
-		System.out.print("\nprogram end");
-	}
-	
-	private static void sample(){
-		
 	}
 	
 	private static BoardState userInputBoard(){
@@ -44,7 +53,7 @@ public class NQueen {
 		return boardInput;
 	}
 	
-	//-----------user input methods
+	//user input to place one queen in each column
 	private static BoardState askForQueenPositions(int numQueens){
 		@SuppressWarnings("resource")
 		Scanner keyboard = new Scanner(System.in);
